@@ -2,7 +2,7 @@
 
 > Analysed 1M+ retail transactions to identify which customers actually drive revenue, built statistical proof that personalised campaigns outperform generic ones, and deployed the findings as an interactive dashboard used by a simulated marketing team.
 
-**[Live Dashboard →](https://your-streamlit-url.streamlit.app)** &nbsp;|&nbsp; **[Power BI Report →](#)** &nbsp;|&nbsp; **[Dataset: UCI Online Retail II](https://archive.ics.uci.edu/ml/datasets/Online+Retail+II)**
+**[Live Dashboard →](https://customer-segmentation-and-rfm-analysis-cucaetgaxx5ckkgwfnt6bb.streamlit.app/)** &nbsp;|&nbsp; **[Power BI Report →](#)** &nbsp;|&nbsp; **[Dataset: UCI Online Retail II](https://archive.ics.uci.edu/ml/datasets/Online+Retail+II)**
 
 ---
 
