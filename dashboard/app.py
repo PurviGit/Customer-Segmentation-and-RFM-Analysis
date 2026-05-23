@@ -182,9 +182,15 @@ def qc(s, labels):
 with st.spinner("Loading customer data …"):
     df = load_data()
 
-# ensure Customer Id exists
+# Ensure output is DataFrame
+if not isinstance(df, pd.DataFrame):
+    st.error(f"load_data() returned {type(df)} instead of DataFrame")
+    st.stop()
+
 if "Customer Id" not in df.columns:
-    df["Customer Id"] = np.arange(len(df))
+    st.error("Customer Id column not found")
+    st.write("Available columns:", list(df.columns))
+    st.stop()
 
 
 with st.sidebar:
