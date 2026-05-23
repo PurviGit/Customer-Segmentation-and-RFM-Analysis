@@ -134,7 +134,20 @@ def load_data():
     mon = np.array(mon)
 
     def qc(s, labs):
-        return pd.qcut(s.rank(method="first"), 5, labels=labs, duplicates="drop").astype(int)
+        ranked = s.rank(method="first")
+        try:
+            result = pd.qcut(
+                ranked,
+                q=5,
+                labels=labs
+            )
+        except ValueError:
+            result = pd.cut(
+                ranked,
+                bins=5,
+                labels=labs
+            )
+        return result.astype(int)
 
     RS = qc(rec, [5,4,3,2,1])
     FS = qc(frq, [1,2,3,4,5])
