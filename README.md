@@ -62,15 +62,19 @@ _Effort vs revenue opportunity — where marketing budget should actually go_
 ### Power BI — Business Intelligence Report
 
 ![Power BI Executive Summary](reports/powerbi_exec_summary.png)
+
 _4327 customers, £7.84M revenue, Champions generating 62% of total revenue_
 
 ![Power BI Customer Deep Dive](reports/powerbi_deep_dive.png)
+
 _Per-customer scatter with RFM score slider and Top 20 customers table_
 
 ![Power BI Churn & CLV](reports/powerbi_churn_clv.png)
+
 _Gauge showing £843K at risk, churn distribution by segment, CLV by RFM score_
 
 ![Power BI Marketing Strategy](reports/powerbi_strategy.png)
+
 _ROI comparison chart (break-even at 100%), revenue opportunity by segment, full strategy table_
 
 ---
