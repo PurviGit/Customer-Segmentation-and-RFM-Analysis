@@ -1,0 +1,107 @@
+# ============================================================
+# FILE     : docker-compose.yml
+# PROJECT  : Customer Segmentation — Multi-Container Setup
+# ============================================================
+#
+# docker-compose runs MULTIPLE containers together.
+# This file defines 3 services:
+#
+#   1. pipeline : Runs the full SQL + ML pipeline once at startup
+#   2. dashboard: Runs the Streamlit web dashboard (always on)
+#   3. tests    : Runs pytest and exits (use for CI/CD)
+#
+# HOW TO USE:
+#   Full stack (pipeline + dashboard):
+#     docker compose up
+#
+#   Dashboard only (if data already processed):
+#     docker compose up dashboard
+#
+#   Run tests:
+#     docker compose run tests
+#
+#   Run pipeline once then dashboard:
+#     docker compose up pipeline && docker compose up dashboard
+#
+#   Stop everything:
+#     docker compose down
+# ============================================================
+
+version: '3.9'
+
+services:
+
+  # ── Service 1: Pipeline Runner ──────────────────────────────
+  # Runs the full analytics pipeline (SQL → ML → reports) once
+  pipeline:
+    build: .
+    container_name: rfm_pipeline
+    volumes:
+      - ./data:/app/data           # persist generated data on host
+      - ./reports:/app/reports     # persist report outputs
+      - ./logs:/app/logs           # persist logs
+    environment:
+      - PYTHONPATH=/app
+    command: >
+      sh -c "
+        echo '== Starting RFM Pipeline ==' &&
+        python src/db_connector.py &&
+        python notebooks/01_data_cleaning_eda.py &&
+        python notebooks/02_rfm_engineering.py &&
+        python notebooks/03_clustering.py &&
+        python notebooks/04_insights.py &&
+        python anomaly_detection/anomaly_detector.py &&
+        python clv_model/clv_bgnbd.py &&
+        python cohort_analysis/cohort_retention.py &&
+        python ab_testing/ab_test_analysis.py &&
+        python reports/generate_pdf_report.py &&
+        echo '== Pipeline Complete =='
+      "
+    restart: "no"       # run once, don't restart
+
+  # ── Service 2: Streamlit Dashboard ──────────────────────────
+  # Serves the interactive web dashboard
+  dashboard:
+    build: .
+    container_name: rfm_dashboard
+    ports:
+      - "8501:8501"      # host_port:container_port
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+    environment:
+      - PYTHONPATH=/app
+    depends_on:
+      pipeline:
+        condition: service_completed_successfully
+    command: >
+      streamlit run dashboard/app.py
+      --server.address=0.0.0.0
+      --server.port=8501
+      --server.headless=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ── Service 3: Test Runner ───────────────────────────────────
+  # Runs pytest — use in CI/CD or before merging code
+  tests:
+    build: .
+    container_name: rfm_tests
+    volumes:
+      - ./data:/app/data
+    environment:
+      - PYTHONPATH=/app
+    command: >
+      pytest tests/ -v
+      --tb=short
+      --color=yes
+      --cov=src
+      --cov-report=term-missing
+    profiles:
+      - testing           # only runs with: docker compose --profile testing run tests
+    restart: "no"
