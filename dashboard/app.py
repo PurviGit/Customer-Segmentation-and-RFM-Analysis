@@ -158,33 +158,38 @@ def load_data():
     MS = qc(mon, [1,2,3,4,5])
 
     return pd.DataFrame({
-        "Customer Id": np.arange(10000,10000+n),
-        "Segment": sa,
-        "Recency": rec,
-        "Frequency": frq,
-        "Monetary": mon,
-        "RFM_Score": np.clip(
-            RS.astype(int) + FS.astype(int) + MS.astype(int),
-            3,15
-        ),
-        "R_Score": RS,
-        "F_Score": FS,
-        "M_Score": MS,
-        "CLV_Estimate": (mon/np.clip(rec,1,None)*365).round(2),
-        "Churn_Probability": np.where(
-            rec>180,.85,
-            np.where(rec>90,.60,
-            np.where(rec>30,.25,.05))
-        ),
-        "Country": np.random.choice(
-            ["United Kingdom","Germany","France",
-             "Netherlands","Australia","Japan","Spain"],
-            n,
-            p=[.72,.07,.07,.04,.04,.03,.03]
-        ),
-        "PC1": np.random.normal(0,1.5,n),
-        "PC2": np.random.normal(0,1.2,n),
-    })
+    "Customer Id": np.arange(10000,10000+n),
+    "Segment": sa,
+    "Recency": rec,
+    "Frequency": frq,
+    "Monetary": mon,
+
+    "RFM_Score": np.clip(
+        RS.astype(int)+FS.astype(int)+MS.astype(int),
+        3,15
+    ),
+
+    "R_Score": RS.astype(int),
+    "F_Score": FS.astype(int),
+    "M_Score": MS.astype(int),
+
+    "CLV_Estimate": (mon/np.clip(rec,1,None)*365).round(2),
+
+    "Churn_Probability": np.where(
+        rec>180,.85,
+        np.where(rec>90,.60,
+        np.where(rec>30,.25,.05))
+    ),
+
+    "Country": np.random.choice(
+        ["United Kingdom","Germany","France",
+         "Netherlands","Australia","Japan","Spain"],
+        n,p=[.72,.07,.07,.04,.04,.03,.03]
+    ),
+
+    "PC1": np.random.normal(0,1.5,n),
+    "PC2": np.random.normal(0,1.2,n),
+})
 
 
 with st.spinner("Loading customer data …"):
