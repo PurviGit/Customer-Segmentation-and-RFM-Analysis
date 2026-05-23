@@ -134,47 +134,56 @@ def load_data():
     mon = np.array(mon)
 
 
-def qc(s, labels):
-    s = pd.Series(s)   # convert to Series if not already
+    def qc(s, labels):
+        s = pd.Series(s)
 
-    ranked = s.rank(method="first")
+        ranked = s.rank(method="first")
 
-    try:
-        return pd.qcut(
-            ranked,
-            q=5,
-            labels=labels
-        )
-    except ValueError:
-        # handle duplicate values safely
-        return pd.qcut(
-            ranked,
-            q=5,
-            labels=labels,
-            duplicates="drop"
-        )
+        try:
+            return pd.qcut(
+                ranked,
+                q=5,
+                labels=labels
+            )
+        except ValueError:
+            return pd.qcut(
+                ranked,
+                q=5,
+                labels=labels,
+                duplicates="drop"
+            )
 
     RS = qc(rec, [5,4,3,2,1])
     FS = qc(frq, [1,2,3,4,5])
     MS = qc(mon, [1,2,3,4,5])
 
     return pd.DataFrame({
-        "Customer Id":       np.arange(10000, 10000+n),
-        "Segment":           sa,
-        "Recency":           rec,
-        "Frequency":         frq,
-        "Monetary":          mon,
-        "RFM_Score":         np.clip(RS+FS+MS, 3, 15),
-        "R_Score":           RS,
-        "F_Score":           FS,
-        "M_Score":           MS,
-        "CLV_Estimate":      (mon/np.clip(rec, 1, None)*365).round(2),
-        "Churn_Probability": np.where(rec>180,.85,np.where(rec>90,.60,np.where(rec>30,.25,.05))),
-        "Country":           np.random.choice(
-            ["United Kingdom","Germany","France","Netherlands","Australia","Japan","Spain"],
-            n, p=[.72,.07,.07,.04,.04,.03,.03]),
-        "PC1": np.random.normal(0, 1.5, n),
-        "PC2": np.random.normal(0, 1.2, n),
+        "Customer Id": np.arange(10000,10000+n),
+        "Segment": sa,
+        "Recency": rec,
+        "Frequency": frq,
+        "Monetary": mon,
+        "RFM_Score": np.clip(
+            RS.astype(int) + FS.astype(int) + MS.astype(int),
+            3,15
+        ),
+        "R_Score": RS,
+        "F_Score": FS,
+        "M_Score": MS,
+        "CLV_Estimate": (mon/np.clip(rec,1,None)*365).round(2),
+        "Churn_Probability": np.where(
+            rec>180,.85,
+            np.where(rec>90,.60,
+            np.where(rec>30,.25,.05))
+        ),
+        "Country": np.random.choice(
+            ["United Kingdom","Germany","France",
+             "Netherlands","Australia","Japan","Spain"],
+            n,
+            p=[.72,.07,.07,.04,.04,.03,.03]
+        ),
+        "PC1": np.random.normal(0,1.5,n),
+        "PC2": np.random.normal(0,1.2,n),
     })
 
 
