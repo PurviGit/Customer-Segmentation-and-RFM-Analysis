@@ -133,7 +133,6 @@ def load_data():
     frq = np.array(frq)
     mon = np.array(mon)
 
-    import pandas as pd
 
 def qc(s, labels):
     s = pd.Series(s)   # convert to Series if not already
