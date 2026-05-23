@@ -231,4 +231,4 @@ rfm-customer-segmentation/
 ---
 
 _Built by Purvi Porwal — Data Analyst_  
-_[LinkedIn](https://linkedin.com/in/purvi-porwal-a6554a258) · [Live Dashboard](https://your-streamlit-url.streamlit.app) · [GitHub](https://github.com/PurviGit)_
+_[LinkedIn](https://linkedin.com/in/purvi-porwal-a6554a258) · [Live Dashboard](https://customer-segmentation-and-rfm-analysis-cucaetgaxx5ckkgwfnt6bb.streamlit.app/) · [GitHub](https://github.com/PurviGit)_
