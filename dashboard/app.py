@@ -195,6 +195,7 @@ def load_data():
 with st.spinner("Loading customer data …"):
     df = load_data()
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 =======
     st.write("Rows:", len(df))
@@ -202,6 +203,9 @@ st.write("Columns:", df.columns.tolist())
 st.write("First Customer:", df["Customer Id"].head())
 st.write("Loaded from:", path)
 >>>>>>> 5ba3ce4ea83cfe4fd124172ba404755a3ea1963c
+=======
+   
+>>>>>>> cf04f521c1cdeb88142199163a5d3afee323a2b0
 
 # Ensure output is DataFrame
 if not isinstance(df, pd.DataFrame):
