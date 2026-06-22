@@ -194,6 +194,7 @@ def load_data():
 
 with st.spinner("Loading customer data …"):
     df = load_data()
+    
 
 # Ensure output is DataFrame
 if not isinstance(df, pd.DataFrame):
