@@ -194,6 +194,9 @@ def load_data():
 
 with st.spinner("Loading customer data …"):
     df = load_data()
+    st.write("Data shape:", df.shape)
+st.write("Recency min:", df["Recency"].min())
+st.write("Recency max:", df["Recency"].max())
 
 # Ensure output is DataFrame
 if not isinstance(df, pd.DataFrame):
