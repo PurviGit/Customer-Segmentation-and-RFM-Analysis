@@ -63,7 +63,7 @@ _Effort vs revenue opportunity — where marketing budget should actually go_
 
 ![Power BI Executive Summary](reports/powerbi_exec_summary.png)
 
-_4327 customers, £7.84M revenue, Champions generating 62% of total revenue_
+_4327 customers, £7.84M revenue, Champions generating 49% of total revenue_
 
 ![Power BI Customer Deep Dive](reports/powerbi_deep_dive.png)
 
@@ -235,4 +235,4 @@ rfm-customer-segmentation/
 ---
 
 _Built by Purvi Porwal — Data Analyst_  
-_[LinkedIn](https://linkedin.com/in/purvi-porwal-a6554a258) · [Live Dashboard](https://customer-segmentation-and-rfm-analysis-cucaetgaxx5ckkgwfnt6bb.streamlit.app/) · [GitHub](https://github.com/PurviGit)_
+_[LinkedIn](https://linkedin.com/in/purviporwal) · [Live Dashboard](https://customer-segmentation-and-rfm-analysis-cucaetgaxx5ckkgwfnt6bb.streamlit.app/) · [GitHub](https://github.com/PurviGit)_
